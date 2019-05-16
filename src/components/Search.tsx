@@ -34,6 +34,16 @@ const Search: React.FunctionComponent<any> = () => {
         
       </form>
 
+      <div>
+        {value.length > 0 &&
+          addresses.map(address => {
+            console.log(address.streetName)
+            return(
+              <p>{address.streetName}</p>
+            )
+          })
+        }
+      </div>
     </div>
   );
 };
