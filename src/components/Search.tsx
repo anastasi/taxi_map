@@ -7,10 +7,15 @@ interface SearchResult {
 const Search: React.FunctionComponent<any> = () => {
   const [value, setValue] = useState<string>("");
   const [addresses, setAddresses] = useState<SearchResult[]>([]);
-  
 
   const handleOnChange = async (e: any) => {
-    console.log(e.target.value)
+    setValue(e.target.value);
+    if (!e.target.value) return;
+    const response = await fetch(
+      `https://cabonline-frontend-test.herokuapp.com/addresses?q=${e.target.value}`
+    );
+    const addresses = await response.json()
+    setAddresses(addresses)
   };
   console.log("Addresses", addresses)
 
@@ -26,7 +31,9 @@ const Search: React.FunctionComponent<any> = () => {
           required
         />
         <button type="submit">Search</button>
+        
       </form>
+
     </div>
   );
 };
