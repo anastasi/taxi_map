@@ -1,12 +1,16 @@
 import React, { useState, useContext } from "react";
 import SelectedAddress from "./SelectedAddress";
-import { AddressContext, SearchResult } from "../AddressContext"
-
+import { AddressContext, SearchResult } from "../AddressContext";
 
 const Search: React.FunctionComponent<any> = () => {
+  const {
+    addresses,
+    setAddresses,
+    setSelectedAddress,
+    selectedAddress,
+    setVehicles
+  } = useContext(AddressContext);
 
-const {addresses, setAddresses, setSelectedAddress,selectedAddress  } = useContext(AddressContext)
-  
   const [value, setValue] = useState<string>("");
   const handleOnChange = async (e: any) => {
     setValue(e.target.value);
@@ -20,9 +24,12 @@ const {addresses, setAddresses, setSelectedAddress,selectedAddress  } = useConte
     setAddresses(addresses);
   };
 
-  const handleOnClick = (id: number) => {
+  const handleOnClick = async (id: number) => {
     //Select one address
-    const singleAddress = addresses.find((item: SearchResult) => item.id === id);
+    const singleAddress = addresses.find(
+      (item: SearchResult) => item.id === id
+    );
+    console.log(singleAddress);
     //Reshape selectedAddress for showing clicked address
     if (singleAddress) {
       setSelectedAddress({
@@ -51,13 +58,11 @@ const {addresses, setAddresses, setSelectedAddress,selectedAddress  } = useConte
         <button type="submit">Search</button>
       </form>
 
-      {selectedAddress && (
-        <SelectedAddress selectedAddress={selectedAddress} />
-      )}
+      {selectedAddress && <SelectedAddress selectedAddress={selectedAddress} />}
 
       <div>
         {value.length > 0 &&
-          addresses.map((address: SearchResult)  => {
+          addresses.map((address: SearchResult) => {
             return (
               <p key={address.id} onClick={() => handleOnClick(address.id)}>
                 {address.streetName}

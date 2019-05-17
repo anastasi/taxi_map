@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import GoogleMapReact from "google-map-react";
-import { AddressContext } from "../AddressContext";
+import { AddressContext, SearchResult } from "../AddressContext";
 import styled from "styled-components";
-import marker from "../assets/marker-icon.png"
+import marker from "../assets/marker-icon.png";
 
 const Marker = styled.div`
   width: 50px;
@@ -10,12 +10,20 @@ const Marker = styled.div`
 
 const CurrentPosition: React.FunctionComponent<any> = () => (
   <Marker>
-    <img src={marker} alt="marker"/>
+    <img src={marker} alt="marker" />
+  </Marker>
+);
+
+const VehiclesPosition: React.FunctionComponent<any> = () => (
+  <Marker>
+    <img src={marker} alt="marker" />
   </Marker>
 );
 
 const SimpleMap: React.FunctionComponent<any> = () => {
-  const { selectedAddress } = useContext(AddressContext);
+  const { selectedAddress, vehicles, setVehicles, addresses } = useContext(
+    AddressContext
+  );
   const initialDefaultProps = {
     center: {
       lat: selectedAddress.latitude,
@@ -25,6 +33,7 @@ const SimpleMap: React.FunctionComponent<any> = () => {
   };
 
   const [defaultProps, setDefaultProps] = useState(initialDefaultProps);
+
   useEffect(() => {
     setDefaultProps({
       ...defaultProps,
@@ -33,9 +42,18 @@ const SimpleMap: React.FunctionComponent<any> = () => {
         lng: selectedAddress.longitude
       }
     });
-    console.log("COORD", selectedAddress )
+    //Vehicles fetch
+    const vehiclesEffect = async () => {
+      const response = await fetch(
+        `https://cabonline-frontend-test.herokuapp.com/vehicles?lat=${
+          selectedAddress.latitude
+        }&lng=${selectedAddress.longitude}`
+      );
+      const vehicles = await response.json();
+      setVehicles(vehicles);
+    };
+    vehiclesEffect();
   }, [selectedAddress.latitude, selectedAddress.longitude]);
-
   const apiId = "AIzaSyDKE24SaYeYPDx6LDmngAFuCOzl333mwDg";
 
   return (
@@ -46,9 +64,10 @@ const SimpleMap: React.FunctionComponent<any> = () => {
         center={defaultProps.center}
         zoom={defaultProps.zoom}
       >
-        <CurrentPosition
-          center={defaultProps.center}
-        />
+        <CurrentPosition center={defaultProps.center} />
+        {vehicles.map((item: SearchResult, index: number) => (
+          <VehiclesPosition key={index} lat={item.lat} lng={item.lng} />
+        ))}
       </GoogleMapReact>
     </div>
   );

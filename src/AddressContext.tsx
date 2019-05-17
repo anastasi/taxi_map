@@ -13,6 +13,11 @@ export interface SearchResult {
   setSelectedAddress: Function;
   addresses: any;
   setAddresses: Function;
+  vehicles: any;
+  setVehicles: Function;
+  brand: string;
+  lat: number;
+  lng: number;
 }
 
 const initialState: any = {
@@ -26,7 +31,9 @@ const initialState: any = {
   selectedAddress: {},
   setSelectedAddress: () => {},
   addresses: any,
-  setAddresses: () => {}
+  setAddresses: () => {},
+  vehicles: any,
+  setVehicles: () => {}
 };
 
 const AddressContext = React.createContext(initialState);
@@ -37,17 +44,20 @@ const AddressContextProvider: React.FunctionComponent = ({ children }) => {
     streetName: "",
     city: "",
     latitude: 59.334591,
-    longitude: 18.063240
+    longitude: 18.06324
   });
-  
   const [addresses, setAddresses] = useState<SearchResult[]>([]);
+  const [vehicles, setVehicles] = useState<SearchResult[]>([]);
+
   return (
     <AddressContext.Provider
       value={{
         selectedAddress,
         setSelectedAddress,
         addresses,
-        setAddresses
+        setAddresses,
+        vehicles,
+        setVehicles
       }}
     >
       {children}
