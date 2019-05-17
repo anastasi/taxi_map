@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import SelectedAddress from "./SelectedAddress";
 
 interface SearchResult {
   text: string;
@@ -34,7 +35,9 @@ const Search: React.FunctionComponent<any> = () => {
   };
 
   const handleOnClick = (id: number) => {
+    //Select one address
     const singleAddress = addresses.find(item => item.id === id);
+    //Reshape selectedAddress for showing clicked address
     if (singleAddress) {
       setSelectedAddress({
         id: singleAddress.id,
@@ -44,10 +47,12 @@ const Search: React.FunctionComponent<any> = () => {
         longtitude: singleAddress.longtitude
       });
       setSelectedAddress(singleAddress);
-      setAddresses([])
+      setAddresses([]);
     }
   };
   console.log("SINGLE", selectedAddress);
+
+  
 
   return (
     <div>
@@ -61,21 +66,17 @@ const Search: React.FunctionComponent<any> = () => {
           required
         />
         <button type="submit">Search</button>
-        
       </form>
+
       {selectedAddress && (
-        <div>
-          <h4 key={selectedAddress.id}>
-            {selectedAddress.streetName} {selectedAddress.city}
-          </h4>
-        </div>
+        <SelectedAddress selectedAddress={selectedAddress} />
       )}
 
       <div>
         {value.length > 0 &&
           addresses.map(address => {
             return (
-              <p onClick={() => handleOnClick(address.id)}>
+              <p key={address.id} onClick={() => handleOnClick(address.id)}>
                 {address.streetName}
               </p>
             );

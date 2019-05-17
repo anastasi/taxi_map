@@ -1,5 +1,5 @@
 import React from "react";
-import GoogleMap from "./GoogleMap";
+import GoogleMap from "./components/GoogleMap";
 import Search from "./components/Search";
 import "./App.css";
 
