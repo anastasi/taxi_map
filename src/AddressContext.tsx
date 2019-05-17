@@ -8,7 +8,7 @@ export interface SearchResult {
   streetName: string;
   city: string;
   latitude: number;
-  longtitude: number;
+  longitude: number;
   selectedAddress: object;
   setSelectedAddress: Function;
   addresses: any;
@@ -22,7 +22,7 @@ const initialState: any = {
   streetName: "",
   city: "",
   latitude: 0,
-  longtitude: 0,
+  longitude: 0,
   selectedAddress: {},
   setSelectedAddress: () => {},
   addresses: any,
@@ -36,9 +36,10 @@ const AddressContextProvider: React.FunctionComponent = ({ children }) => {
     id: 0,
     streetName: "",
     city: "",
-    latitude: 0,
-    longtitude: 0
+    latitude: 59.334591,
+    longitude: 18.063240
   });
+  
   const [addresses, setAddresses] = useState<SearchResult[]>([]);
   return (
     <AddressContext.Provider

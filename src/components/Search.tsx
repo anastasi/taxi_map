@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import SelectedAddress from "./SelectedAddress";
-import { AddressContext } from "../AddressContext"
-import {SearchResult} from "../AddressContext"
+import { AddressContext, SearchResult } from "../AddressContext"
 
 
 const Search: React.FunctionComponent<any> = () => {
+
 const {addresses, setAddresses, setSelectedAddress,selectedAddress  } = useContext(AddressContext)
   
   const [value, setValue] = useState<string>("");
@@ -30,15 +30,12 @@ const {addresses, setAddresses, setSelectedAddress,selectedAddress  } = useConte
         streetName: singleAddress.streetName,
         city: singleAddress.city,
         latitude: singleAddress.latitude,
-        longtitude: singleAddress.longtitude
+        longitude: singleAddress.longitude
       });
       setSelectedAddress(singleAddress);
       setAddresses([]);
     }
   };
-  console.log("SINGLE", selectedAddress);
-
-  
 
   return (
     <div>
