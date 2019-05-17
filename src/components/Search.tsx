@@ -1,27 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import SelectedAddress from "./SelectedAddress";
+import { AddressContext } from "../AddressContext"
+import {SearchResult} from "../AddressContext"
 
-interface SearchResult {
-  text: string;
-  singleAddress: object;
-  id: number;
-  streetName: string;
-  city: string;
-  latitude: number;
-  longtitude: number;
-}
+
 const Search: React.FunctionComponent<any> = () => {
+const {addresses, setAddresses, setSelectedAddress,selectedAddress  } = useContext(AddressContext)
+  
   const [value, setValue] = useState<string>("");
-  const [selectedAddress, setSelectedAddress] = useState({
-    id: 0,
-    streetName: "",
-    city: "",
-    latitude: 0,
-    longtitude: 0
-  });
-
-  const [addresses, setAddresses] = useState<SearchResult[]>([]);
-
   const handleOnChange = async (e: any) => {
     setValue(e.target.value);
     if (!e.target.value) return;
@@ -36,7 +22,7 @@ const Search: React.FunctionComponent<any> = () => {
 
   const handleOnClick = (id: number) => {
     //Select one address
-    const singleAddress = addresses.find(item => item.id === id);
+    const singleAddress = addresses.find((item: SearchResult) => item.id === id);
     //Reshape selectedAddress for showing clicked address
     if (singleAddress) {
       setSelectedAddress({
@@ -74,7 +60,7 @@ const Search: React.FunctionComponent<any> = () => {
 
       <div>
         {value.length > 0 &&
-          addresses.map(address => {
+          addresses.map((address: SearchResult)  => {
             return (
               <p key={address.id} onClick={() => handleOnClick(address.id)}>
                 {address.streetName}

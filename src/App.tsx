@@ -2,13 +2,16 @@ import React from "react";
 import GoogleMap from "./components/GoogleMap";
 import Search from "./components/Search";
 import "./App.css";
+import { AddressContextProvider } from "./AddressContext";
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <Search />
-      <GoogleMap />
-    </div>
+    <AddressContextProvider>
+      <div className="App">
+        <Search />
+        <GoogleMap />
+      </div>
+    </AddressContextProvider>
   );
 };
 
