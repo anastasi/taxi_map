@@ -43,7 +43,10 @@ const SimpleMap: React.FunctionComponent<any> = () => {
       }
     });
     //Vehicles fetch
+    let poller = 0;
     const vehiclesEffect = async () => {
+      let isWorking = false;
+      
       const response = await fetch(
         `https://cabonline-frontend-test.herokuapp.com/vehicles?lat=${
           selectedAddress.latitude
@@ -51,8 +54,29 @@ const SimpleMap: React.FunctionComponent<any> = () => {
       );
       const vehicles = await response.json();
       setVehicles(vehicles);
+
+      poller = setInterval(async () => {
+        if (isWorking) {
+          return;
+        }
+
+        isWorking = true;
+        const response = await fetch(
+          `https://cabonline-frontend-test.herokuapp.com/vehicles?lat=${
+            selectedAddress.latitude
+          }&lng=${selectedAddress.longitude}`
+        );
+        const vehicles = await response.json();
+        setVehicles(vehicles);
+        isWorking = false;
+      }, 5000);
     };
     vehiclesEffect();
+    return () => {
+      if (poller) {
+        clearInterval(poller);
+      }
+    };
   }, [selectedAddress.latitude, selectedAddress.longitude]);
   const apiId = "AIzaSyDKE24SaYeYPDx6LDmngAFuCOzl333mwDg";
 
