@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import SelectedAddress from "./SelectedAddress";
-import { AddressContext, SearchResult } from "../AddressContext";
+import { AddressContext } from "../../context/AddressContext";
+import AddressesList from "./AddressesList"
 
 const Search: React.FunctionComponent<any> = () => {
   const {
@@ -8,11 +9,10 @@ const Search: React.FunctionComponent<any> = () => {
     setAddresses,
     setSelectedAddress,
     selectedAddress,
-    setVehicles
   } = useContext(AddressContext);
 
   const [value, setValue] = useState<string>("");
-  const handleOnChange = async (e: any) => {
+  const handleOnChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
     if (!e.target.value) return;
     const response = await fetch(
@@ -27,9 +27,8 @@ const Search: React.FunctionComponent<any> = () => {
   const handleOnClick = async (id: number) => {
     //Select one address
     const singleAddress = addresses.find(
-      (item: SearchResult) => item.id === id
+      (item) => item.id === id
     );
-    console.log(singleAddress);
     //Reshape selectedAddress for showing clicked address
     if (singleAddress) {
       setSelectedAddress({
@@ -43,7 +42,6 @@ const Search: React.FunctionComponent<any> = () => {
       setAddresses([]);
     }
   };
-
   return (
     <div>
       <h1>Search</h1>
@@ -59,14 +57,11 @@ const Search: React.FunctionComponent<any> = () => {
       </form>
 
       {selectedAddress && <SelectedAddress selectedAddress={selectedAddress} />}
-
       <div>
         {value.length > 0 &&
-          addresses.map((address: SearchResult) => {
+          addresses.map((address) => {
             return (
-              <p key={address.id} onClick={() => handleOnClick(address.id)}>
-                {address.streetName}
-              </p>
+              <AddressesList address={address} onClick={() => handleOnClick(address.id)} />
             );
           })}
       </div>

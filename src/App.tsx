@@ -1,16 +1,18 @@
 import React from "react";
-import GoogleMap from "./components/GoogleMap";
-import Search from "./components/Search";
-import "./App.css";
-import { AddressContextProvider } from "./AddressContext";
+import GoogleMap from "./components/googleMap/GoogleMap";
+import Search from "./components/searchResut/Search";
+import { AddressContextProvider } from "./context/AddressContext";
+import { VehicleContextProvider } from "./context/VehicleContext";
 
 const App: React.FC = () => {
   return (
     <AddressContextProvider>
-      <div className="App">
-        <Search />
-        <GoogleMap />
-      </div>
+      <VehicleContextProvider>
+        <div className="App">
+          <Search />
+          <GoogleMap />
+        </div>
+      </VehicleContextProvider>
     </AddressContextProvider>
   );
 };

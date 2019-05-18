@@ -1,30 +1,15 @@
 import React, { useState, useContext, useEffect } from "react";
 import GoogleMapReact from "google-map-react";
-import { AddressContext, SearchResult } from "../AddressContext";
-import styled from "styled-components";
-import marker from "../assets/icon_marker.svg";
-import taxi from "../assets/taxi.svg";
-
-const Marker = styled.div`
-  width: 50px;
-`;
-
-const CurrentPosition: React.FunctionComponent<any> = () => (
-  <Marker>
-    <img src={marker} alt="marker" />
-  </Marker>
-);
-
-const VehiclesPosition: React.FunctionComponent<any> = () => (
-  <Marker>
-    <img src={taxi} alt="taxi" />
-  </Marker>
-);
+import { AddressContext } from "../../context/AddressContext";
+import { VehicleContext } from "../../context/VehicleContext";
+import currentMarker from "../../assets/icon_marker.svg";
+import taxiMarker from "../../assets/taxi.svg";
+import { GoogleMarker } from "./GoogleMarker"
+import { fetchVehicles } from "../../api/fetchVehicles";
 
 const SimpleMap: React.FunctionComponent<any> = () => {
-  const { selectedAddress, vehicles, setVehicles, addresses } = useContext(
-    AddressContext
-  );
+  const { selectedAddress } = useContext(AddressContext);
+  const { vehicles, setVehicles } = useContext(VehicleContext);
   const initialDefaultProps = {
     center: {
       lat: selectedAddress.latitude,
@@ -48,26 +33,16 @@ const SimpleMap: React.FunctionComponent<any> = () => {
     const vehiclesEffect = async () => {
       let isWorking = false;
 
-      const response = await fetch(
-        `https://cabonline-frontend-test.herokuapp.com/vehicles?lat=${
-          selectedAddress.latitude
-        }&lng=${selectedAddress.longitude}`
-      );
-      const vehicles = await response.json();
+      const vehicles = await fetchVehicles(selectedAddress);
       setVehicles(vehicles);
+      console.log("VEHICLES", vehicles);
 
       poller = setInterval(async () => {
         if (isWorking) {
           return;
         }
-
         isWorking = true;
-        const response = await fetch(
-          `https://cabonline-frontend-test.herokuapp.com/vehicles?lat=${
-            selectedAddress.latitude
-          }&lng=${selectedAddress.longitude}`
-        );
-        const vehicles = await response.json();
+        const vehicles = await fetchVehicles(selectedAddress);
         setVehicles(vehicles);
         isWorking = false;
       }, 5000);
@@ -85,13 +60,13 @@ const SimpleMap: React.FunctionComponent<any> = () => {
     // Important! Always set the container height explicitly
     <div style={{ height: "100vh", width: "100%" }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: apiId }}
+        bootstrapURLKeys={{ key: apiId, v: '3.31' }}
         center={defaultProps.center}
         zoom={defaultProps.zoom}
       >
-        <CurrentPosition center={defaultProps.center} />
-        {vehicles.map((item: SearchResult, index: number) => (
-          <VehiclesPosition key={index} lat={item.lat} lng={item.lng} />
+        <GoogleMarker iconMarker={currentMarker} lat={selectedAddress.latitude} lng={selectedAddress.longitude}/>
+        {vehicles.map((item, index: number) => (
+          <GoogleMarker iconMarker={taxiMarker} key={index} lat={item.lat} lng={item.lng} />
         ))}
       </GoogleMapReact>
     </div>
