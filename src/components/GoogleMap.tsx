@@ -2,7 +2,8 @@ import React, { useState, useContext, useEffect } from "react";
 import GoogleMapReact from "google-map-react";
 import { AddressContext, SearchResult } from "../AddressContext";
 import styled from "styled-components";
-import marker from "../assets/marker-icon.png";
+import marker from "../assets/icon_marker.svg";
+import taxi from "../assets/taxi.svg";
 
 const Marker = styled.div`
   width: 50px;
@@ -16,7 +17,7 @@ const CurrentPosition: React.FunctionComponent<any> = () => (
 
 const VehiclesPosition: React.FunctionComponent<any> = () => (
   <Marker>
-    <img src={marker} alt="marker" />
+    <img src={taxi} alt="taxi" />
   </Marker>
 );
 
@@ -29,7 +30,7 @@ const SimpleMap: React.FunctionComponent<any> = () => {
       lat: selectedAddress.latitude,
       lng: selectedAddress.longitude
     },
-    zoom: 11
+    zoom: 14
   };
 
   const [defaultProps, setDefaultProps] = useState(initialDefaultProps);
@@ -46,7 +47,7 @@ const SimpleMap: React.FunctionComponent<any> = () => {
     let poller = 0;
     const vehiclesEffect = async () => {
       let isWorking = false;
-      
+
       const response = await fetch(
         `https://cabonline-frontend-test.herokuapp.com/vehicles?lat=${
           selectedAddress.latitude
