@@ -32,20 +32,23 @@ const SimpleMap: React.FunctionComponent<any> = () => {
     let poller = 0;
     const vehiclesEffect = async () => {
       let isWorking = false;
-
-      const vehicles = await fetchVehicles(selectedAddress);
-      setVehicles(vehicles);
-      console.log("VEHICLES", vehicles);
-
-      poller = setInterval(async () => {
-        if (isWorking) {
-          return;
-        }
-        isWorking = true;
+      try {
         const vehicles = await fetchVehicles(selectedAddress);
         setVehicles(vehicles);
-        isWorking = false;
-      }, 5000);
+
+        poller = setInterval(async () => {
+          if (isWorking) {
+            return;
+          }
+          isWorking = true;
+
+          const vehicles = await fetchVehicles(selectedAddress);
+          setVehicles(vehicles);
+          isWorking = false;
+        }, 5000);
+      } catch (error) {
+        console.error("Error in fetch vehicles", error);
+      }
     };
     vehiclesEffect();
     return () => {

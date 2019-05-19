@@ -4,10 +4,13 @@ import { AddressContext } from "../../context/AddressContext";
 import AddressesList from "./AddressesList";
 import styled from "styled-components";
 import { fetchAddress } from "../../api/fetchAddress";
-import { string } from "prop-types";
 
 const Container = styled.div`
   min-height: 7rem;
+  .error{
+    text-align: center;
+    color: gray;
+  }
   h2 {
     color: #535353;
     text-align: center;
@@ -102,11 +105,17 @@ const Search: React.FunctionComponent<any> = () => {
   } = useContext(AddressContext);
 
   const [value, setValue] = useState<string>("");
+  const [isError, setIsError] = useState<boolean>(false);
+
   const handleOnChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
     if (!e.target.value) return;
-    const addresses = await fetchAddress(e.target.value)
-    setAddresses(addresses);
+    try {
+      const addresses = await fetchAddress(e.target.value);
+      setAddresses(addresses);
+    } catch (error) {
+      setIsError(true);
+    }
   };
 
   const handleOnClick = (id: number) => {
@@ -142,18 +151,21 @@ const Search: React.FunctionComponent<any> = () => {
           />
           <button type="submit">Search</button>
 
-          <List>
-            {value.length > 0 &&
-              addresses.map(address => {
-                return (
-                  <AddressesList
-                    address={address}
-                    onClick={() => handleOnClick(address.id)}
-                  />
-                );
-              })}
-          </List>
-
+          {isError ? (
+            <p className="error">Address is not found</p>
+          ) : (
+            <List>
+              {value.length > 0 &&
+                addresses.map(address => {
+                  return (
+                    <AddressesList
+                      address={address}
+                      onClick={() => handleOnClick(address.id)}
+                    />
+                  );
+                })}
+            </List>
+          )}
           {selectedAddress.streetName && (
             <SelectedAddress selectedAddress={selectedAddress} />
           )}
