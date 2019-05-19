@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import GoogleMap from "./components/googleMap/GoogleMap";
 import Search from "./components/searchResut/Search";
-import { AddressContextProvider } from "./context/AddressContext";
-import { VehicleContextProvider } from "./context/VehicleContext";
+import { AddressContextProvider, VehicleContextProvider } from "./context";
 import Header from "./common/Header";
 
 const App: React.FC = () => {

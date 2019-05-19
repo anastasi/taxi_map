@@ -5,7 +5,7 @@ import { VehicleContext } from "../../context/VehicleContext";
 import currentMarker from "../../assets/icon_marker.svg";
 import taxiMarker from "../../assets/taxi.svg";
 import { GoogleMarker } from "./GoogleMarker";
-import { fetchVehicles } from "../../api/fetchVehicles";
+import { fetchVehicles } from "../../api";
 
 const SimpleMap: React.FunctionComponent<any> = () => {
   const { selectedAddress } = useContext(AddressContext);
