@@ -10,9 +10,12 @@ const AddressesList: React.FunctionComponent<IAddressListProps> = ({
   onClick
 }) => {
   return (
-    <p key={address.id} onClick={onClick}>
-      {address.streetName}
-    </p>
+    <div className="list-item" key={address.id} onClick={onClick}>
+      <p>
+        {address.streetName}
+        <span>{address.city}</span>
+      </p>
+    </div>
   );
 };
 

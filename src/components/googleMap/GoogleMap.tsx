@@ -4,7 +4,7 @@ import { AddressContext } from "../../context/AddressContext";
 import { VehicleContext } from "../../context/VehicleContext";
 import currentMarker from "../../assets/icon_marker.svg";
 import taxiMarker from "../../assets/taxi.svg";
-import { GoogleMarker } from "./GoogleMarker"
+import { GoogleMarker } from "./GoogleMarker";
 import { fetchVehicles } from "../../api/fetchVehicles";
 
 const SimpleMap: React.FunctionComponent<any> = () => {
@@ -60,13 +60,22 @@ const SimpleMap: React.FunctionComponent<any> = () => {
     // Important! Always set the container height explicitly
     <div style={{ height: "100vh", width: "100%" }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: apiId, v: '3.31' }}
+        bootstrapURLKeys={{ key: apiId }}
         center={defaultProps.center}
         zoom={defaultProps.zoom}
       >
-        <GoogleMarker iconMarker={currentMarker} lat={selectedAddress.latitude} lng={selectedAddress.longitude}/>
+        <GoogleMarker
+          iconMarker={currentMarker}
+          lat={selectedAddress.latitude}
+          lng={selectedAddress.longitude}
+        />
         {vehicles.map((item, index: number) => (
-          <GoogleMarker iconMarker={taxiMarker} key={index} lat={item.lat} lng={item.lng} />
+          <GoogleMarker
+            iconMarker={taxiMarker}
+            key={index}
+            lat={item.lat}
+            lng={item.lng}
+          />
         ))}
       </GoogleMapReact>
     </div>

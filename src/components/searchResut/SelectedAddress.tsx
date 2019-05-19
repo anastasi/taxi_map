@@ -6,7 +6,7 @@ const SelectedAddress: React.FunctionComponent<{
 }> = ({ selectedAddress }) => {
   return (
     <h4>
-      {selectedAddress.streetName} {selectedAddress.city}
+      Your address:<span>{selectedAddress.streetName} {selectedAddress.city}</span>
     </h4>
   );
 };
