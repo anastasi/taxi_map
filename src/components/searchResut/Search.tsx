@@ -4,17 +4,16 @@ import { AddressContext } from "../../context/AddressContext";
 import AddressesList from "./AddressesList";
 import styled from "styled-components";
 import { fetchAddress } from "../../api/fetchAddress";
+import Loading from "../Loading";
 
 const Container = styled.div`
-  min-height: 7rem;
-  .error{
+  min-height: 5rem;
+  .error {
     text-align: center;
     color: gray;
   }
-  h2 {
-    color: #535353;
-    text-align: center;
-    font-size: 1.3em;
+  form{
+    margin-top: 3rem;
   }
   .form-wrapper {
     margin-bottom: 10px;
@@ -47,7 +46,6 @@ const Container = styled.div`
       -moz-border-radius: 3px;
       -o-border-radius: 3px;
       border-radius: 3px;
-      font: 80%/1.3 Calibri, Arial;
       height: 34px;
       padding: 2px 5px;
       border: 1px solid #a6a6a6;
@@ -66,6 +64,12 @@ const Container = styled.div`
         margin-left: 0.8rem;
       }
     }
+    @media (max-width: 460px) {
+      width: 100%;
+      input{
+        width: 70%;
+      }
+    }
   }
 `;
 
@@ -81,6 +85,9 @@ const List = styled.div`
   color: #343434;
   border: 1px solid #fffbfb;
   cursor: pointer;
+  @media (max-width: 460px) {
+    width: 100%;
+  }
   .list-item {
     padding: 0.2rem 2rem;
     border-bottom: 1px solid #f1ebeb;
@@ -106,13 +113,16 @@ const Search: React.FunctionComponent<any> = () => {
 
   const [value, setValue] = useState<string>("");
   const [isError, setIsError] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleOnChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
     if (!e.target.value) return;
     try {
+      setIsLoading(true);
       const addresses = await fetchAddress(e.target.value);
       setAddresses(addresses);
+      setIsLoading(false);
     } catch (error) {
       setIsError(true);
     }
@@ -139,17 +149,17 @@ const Search: React.FunctionComponent<any> = () => {
 
   return (
     <Container>
-      <h2>Find your address</h2>
       <form onSubmit={handleOnSubmit}>
         <div className="form-wrapper">
           <input
             type="text"
             value={value}
-            placeholder="Search address..."
+            placeholder="Find your address..."
             onChange={handleOnChange}
             required
           />
           <button type="submit">Search</button>
+          {isLoading && <Loading />}
 
           {isError ? (
             <p className="error">Address is not found</p>
