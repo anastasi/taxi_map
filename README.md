@@ -1,5 +1,5 @@
 ## How do we build and run it? 
-DEMO link: (https://nervous-jepsen-8c464f.netlify.com/)[https://nervous-jepsen-8c464f.netlify.com/]
+DEMO link: https://nervous-jepsen-8c464f.netlify.com/
 
 or run it locally:
 ```
