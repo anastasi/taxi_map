@@ -7,7 +7,7 @@ import taxiMarker from "../../assets/taxi.svg";
 import { GoogleMarker } from "./GoogleMarker";
 import { fetchVehicles } from "../../api";
 
-const SimpleMap: React.FunctionComponent<any> = () => {
+const SimpleMap: React.FunctionComponent = () => {
   const { selectedAddress } = useContext(AddressContext);
   const { vehicles, setVehicles } = useContext(VehicleContext);
   const initialDefaultProps = {

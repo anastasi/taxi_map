@@ -6,7 +6,7 @@ import { fetchAddress } from "../../api";
 import Loading from "../Loading";
 import { Container, List } from "./StyledSearch";
 
-const Search: React.FunctionComponent<any> = () => {
+const Search: React.FunctionComponent = () => {
   const {
     addresses,
     setAddresses,
@@ -73,6 +73,7 @@ const Search: React.FunctionComponent<any> = () => {
                   return (
                     <AddressesList
                       address={address}
+                      key={address.id}
                       onClick={() => handleOnClick(address.id)}
                     />
                   );

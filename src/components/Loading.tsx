@@ -6,7 +6,7 @@ const LoadingContainer = styled.div`
     width: 1rem;
     height: 1rem;
     clear: both;
-    margin: 20px auto;
+    margin: 1.2rem auto;
   }
   .sp-wave {
     border-radius: 50%;
@@ -20,12 +20,12 @@ const LoadingContainer = styled.div`
   .sp-wave:before,
   .sp-wave:after {
     content: "";
-    border: 1px #000 solid;
+    border: 0.08rem #000 solid;
     border-radius: 50%;
     width: 100%;
     height: 100%;
     position: absolute;
-    left: 0px;
+    left: 0rem;
   }
   .sp-wave:before {
     transform: scale(1, 1);

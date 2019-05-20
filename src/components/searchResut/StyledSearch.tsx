@@ -6,46 +6,43 @@ export const Container = styled.div`
     text-align: center;
     color: gray;
   }
-  form{
+  form {
     margin-top: 3rem;
   }
   .form-wrapper {
-    margin-bottom: 10px;
     vertical-align: top;
     margin: 0 auto;
     display: block;
     width: 30rem;
     input {
-      -webkit-border-radius: 3px;
-      -moz-border-radius: 3px;
-      -o-border-radius: 3px;
-      border-radius: 3px;
+      -webkit-border-radius: 0.3rem;
+      -moz-border-radius: 0.3rem;
+      -o-border-radius: 0.3rem;
+      border-radius: 0.3rem;
       -webkit-user-modify: read-write-plaintext-only;
-      font: 80%/1.3 Calibri, Arial;
-      border: 0;
-      height: 34px;
-      padding: 2px 5px;
-      border: 1px solid #a6a6a6;
+      height: 2.2rem;
+      padding: 0.2rem 0.5rem;
+      border: 0.08rem solid #a6a6a6;
       width: 80%;
       display: inline-block;
       background: #fff;
-      font-size: 1.3em;
-      line-height: 1.7em;
+      font-size: 1.3rem;
+      line-height: 1.7rem;
       box-sizing: border-box;
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
     }
     button {
-      -webkit-border-radius: 3px;
-      -moz-border-radius: 3px;
-      -o-border-radius: 3px;
-      border-radius: 3px;
-      height: 34px;
-      padding: 2px 5px;
-      border: 1px solid #a6a6a6;
+      -webkit-border-radius: 0.3rem;
+      -moz-border-radius: 0.3rem;
+      -o-border-radius: 0.3rem;
+      border-radius: 0.3rem;
+      height: 2.2rem;
+      padding: 0.2rem 0.5rem;
+      border: 0.08rem solid #a6a6a6;
       display: inline-block;
       background: #ffcc00;
-      font-size: 1.3em;
+      font-size: 1.3rem;
       color: #343434;
       -webkit-box-sizing: border-box;
     }
@@ -60,7 +57,7 @@ export const Container = styled.div`
     }
     @media (max-width: 460px) {
       width: 100%;
-      input{
+      input {
         width: 70%;
       }
     }
@@ -77,14 +74,14 @@ export const List = styled.div`
   position: absolute;
   background-color: #f7f7f7;
   color: #343434;
-  border: 1px solid #fffbfb;
+  border: 0.08rem solid #fffbfb;
   cursor: pointer;
   @media (max-width: 460px) {
     width: 100%;
   }
   .list-item {
     padding: 0.2rem 2rem;
-    border-bottom: 1px solid #f1ebeb;
+    border-bottom: 0.08rem solid #f1ebeb;
     :hover {
       background-color: #ececec;
     }
@@ -92,7 +89,7 @@ export const List = styled.div`
   span {
     padding-left: 1.5rem;
     color: gray;
-    font-size: 13px;
+    font-size: 0.8rem;
     font-weight: bold;
   }
 `;

@@ -10,7 +10,6 @@ export const fetchVehicles = async (selectedAddress: IAddress) => {
 };
 
 export const fetchAddress = async (search: string) => {
-  // throw "error";
   const response = await fetch(
     `https://cabonline-frontend-test.herokuapp.com/addresses?q=${search}`
   );
